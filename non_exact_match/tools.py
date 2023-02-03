@@ -4,9 +4,9 @@ import re
 
 def string_normalize(string):
     string = string.lower()
-    string = string.replace("\n", "")
+    string = re.sub(r"\n", "", string)
     string = re.sub(' +', ' ', string)
-    string = ' '.join(word.strip(punctuation) for word in string.split())
+    string = string.translate(str.maketrans('', '', punctuation))
     return string
 
 

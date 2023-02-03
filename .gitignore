@@ -1,3 +1,7 @@
 .idea/
 .ipynb_checkpoints/
+.python-version
+non_exact_match.ipynb
+non_exact_match/__pycache__/
+
 
