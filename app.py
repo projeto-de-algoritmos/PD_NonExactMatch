@@ -40,10 +40,10 @@ if __name__ == '__main__':
     right.text(f"percentage of what the lcs found: {round((lcs_result_f / len(user_input_normalized)) * 100, 1)}%")
     right.text(f"lcsubstring match text: {text_result_f}")
     right.text(f"lcsubstring + ngram match text: {ngram_result_lcs}")
-    right.text(f"leveshtein distance to real string: {err_lcs}")
+    right.text(f"leveshtein distance lcsubstring + ngram to pattern string: {err_lcs}")
     right.text(f"---------------------NGRAM-----------------------")
     right.text(f"ngram + leveshtein match text: {ngram_result}")
-    right.text(f"leveshtein distance to real string: {longest}")
+    right.text(f"leveshtein distance ngram string to pattern string: {longest}")
     right.text(f"---------------------IN Python-----------------------")
     right.text(f"Python string-searching: {user_input_normalized in user_input_2_normalized}")
     if not user_input:
