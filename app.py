@@ -4,25 +4,25 @@ from non_exact_match import lcs, levenshtein_dist, tools
 
 if __name__ == '__main__':
 
-    st.set_page_config(page_title="Non-Exact Match Search")
+    st.set_page_config(page_title="Non-Exact Match Search", layout="wide")
+    left, right = st.columns(2)
+    left.title("Faça a busca de um padrão em um texto")
+    right.header("Resultados")
 
-    user_input = st.text_area("Escreva o padrão que deseja procurar", """Loerem Ipssum is simply""")
-    print(user_input)
-    user_input_2 = st.text_area("Escreva o texto alvo", """Loeem Isum is simpl dummy text of the printing and
+    user_input = left.text_area("Escreva o padrão que deseja procurar", """Loerem Ipssum is simply""")
+    user_input_2 = left.text_area("Escreva o texto alvo", """Loeem Isum is simpl dummy text of the printing and
                                                       typesetting industry. Lorem Ilpssum has been the industry's 
                                                       standard dummy text ever since the 1590s, when an unknown""")
-
-    name_lenth = len(user_input.split(" "))
-    ngram_input = tools.generate_ngrams(tools.string_normalize(user_input_2), ngram=name_lenth)
-    print(ngram_input)
-    left, center, right = st.columns([1, 1, 1])
-    st.text("Ngrams result")
-    st.text(ngram_input)
-
+    user_input_2_normalized = tools.string_normalize(user_input_2)
     user_input_normalized = tools.string_normalize(user_input)
+
+    user_input_lenth = len(user_input.split(" "))
+    ngram_input = tools.generate_ngrams(user_input_2_normalized, ngram=user_input_lenth)
+
 
     longest = 999
     longest_lcs = 0
+    accepted_lcs = 85
     for ngram in ngram_input:
         err = levenshtein_dist.edit_distance(ngram, user_input_normalized)
         text_result, start, end, lcs_result = lcs.lcsubstring(user_input_normalized, ngram)
@@ -35,15 +35,17 @@ if __name__ == '__main__':
             text_result_f, start_f, end_f, lcs_result_f = text_result, start, end, lcs_result
             err_lcs = levenshtein_dist.edit_distance(ngram_result_lcs, user_input_normalized)
 
-    st.text(f"----------------------LCS------------------------")
-    st.text(f"lcsubstring leght: {lcs_result_f}")
-    st.text(f"lcsubstring match text: {text_result_f}")
-    st.text(f"lcsubstring + ngram match text: {ngram_result_lcs}")
-    st.text(f"leveshtein distance to real string: {err_lcs}")
-    st.text(f"---------------------NGRAM-----------------------")
-    st.text(f"ngram + leveshtein match text: {ngram_result}")
-    st.text(f"leveshtein distance to real string: {longest}")
-
+    right.text(f"----------------------LCS------------------------")
+    right.text(f"lcsubstring leght: {lcs_result_f}")
+    right.text(f"percentage of what the lcs found: {round((lcs_result_f / len(user_input_normalized)) * 100, 1)}%")
+    right.text(f"lcsubstring match text: {text_result_f}")
+    right.text(f"lcsubstring + ngram match text: {ngram_result_lcs}")
+    right.text(f"leveshtein distance to real string: {err_lcs}")
+    right.text(f"---------------------NGRAM-----------------------")
+    right.text(f"ngram + leveshtein match text: {ngram_result}")
+    right.text(f"leveshtein distance to real string: {longest}")
+    right.text(f"---------------------IN Python-----------------------")
+    right.text(f"Python string-searching: {user_input_normalized in user_input_2_normalized}")
     if not user_input:
       st.warning("Please fill out so required fields")
 
