@@ -41,6 +41,13 @@ Por fim basta executar o comando do streamlit
 streamlit run app.py
 ```
 
+Geralmente a interface do streamlit abre no link
+```
+http://localhost:8501
+```
+
+
+
 
 
 
